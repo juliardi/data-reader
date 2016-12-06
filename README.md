@@ -5,3 +5,6 @@ Data Reader is a package for reading dataset file. This package is developed to 
 ## Future Development
 - Add ARFF File Reader
 - Add CSV and ARFF Writer feature
+
+## License
+This project is licensed under MIT License.

@@ -3,6 +3,7 @@
 namespace DataReader\CSV;
 
 use DataReader\Exception\InvalidConfigException;
+use DataReader\IFace\ConfigurationInterface;
 
 /**
  * @author Juliardi <ardi93@gmail.com>
