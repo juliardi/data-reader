@@ -1,0 +1,16 @@
+{
+    "name": "juliardi/data-reader",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Muhammad Safri Juliardi",
+            "email": "ardi93@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "DataReader\\": "src/"
+        }
+    }
+}
