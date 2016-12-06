@@ -116,7 +116,7 @@ class Reader implements DataReaderInterface
      */
     public function hasAttribute($attribute)
     {
-        return array_key_exists($attribute, $this->attributes);
+        return array_search($attribute, $this->attributes) !== false;
     }
 
     /**
@@ -159,7 +159,7 @@ class Reader implements DataReaderInterface
         $result = [];
 
         foreach ($this->data as $row) {
-            if ($length == 0) {
+            if ($length === 0) {
                 break;
             }
             if ($this->isMatch($row, $criteria)) {
@@ -200,7 +200,7 @@ class Reader implements DataReaderInterface
         $result = true;
 
         foreach ($criteria as $key => $value) {
-            if ($this->hasHeader($key)) {
+            if ($this->hasAttribute($key)) {
                 if ($data[$key] != $value) {
                     $result = $result && false;
                 }
