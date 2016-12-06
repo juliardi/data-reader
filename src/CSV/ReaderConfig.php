@@ -35,12 +35,13 @@ class ReaderConfig implements ConfigurationInterface
      */
     protected $firstLineAttributes;
 
-    public function __construct($length = 0, $delimiter = ',', $enclosure = '"', $escape = '\\')
+    public function __construct($length = 0, $delimiter = ',', $enclosure = '"', $escape = '\\', $firstLineAttributes = true)
     {
         $this->setLength($length);
         $this->setDelimiter($delimiter);
         $this->setEnclosureChar($enclosure);
         $this->setEscapeChar($escape);
+        $this->setFirstLineAsAttributes($firstLineAttributes);
     }
 
     /**

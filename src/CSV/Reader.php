@@ -16,42 +16,49 @@ class Reader implements DataReaderInterface
     protected $classes;
 
     /**
-     * @param string $filename
+     * @param string                 $filename
      * @param ConfigurationInterface $config
      *
      * @throws InvalidConfigException
      */
-    public function __construct($filename, ConfigurationInterface $config = new ReaderConfig())
+    public function __construct($filename, ConfigurationInterface $config = null)
     {
-        if(strtolower(pathinfo($filename, PATHINFO_EXTENSION)) != 'csv') {
+        if (strtolower(pathinfo($filename, PATHINFO_EXTENSION)) != 'csv') {
             throw new InvalidConfigException("Filename must contain a 'csv' extension");
         }
+
+        if (is_null($config)) {
+            $config = new ReaderConfig();
+        }
+
         $this->data = $this->parseCsv($filename, $config);
-        $this->generateClasses();
+        $this->populateClasses();
     }
 
     /**
      * Parses CSV file.
-     * @param string $filename
+     *
+     * @param string                 $filename
      * @param ConfigurationInterface $config
      */
-    protected function parseCsv($filename, ConfigurationInterface $config) {
+    protected function parseCsv($filename, ConfigurationInterface $config)
+    {
         $length = $config->getLength();
         $delimiter = $config->getDelimiter();
         $enclosure = $config->getEnclosureChar();
-        $escape =$config->getEscapeChar();
+        $escape = $config->getEscapeChar();
         $result = [];
 
-        if($handle = fopen($filename, 'r') !== FALSE) {
-            while(($row = fgetcsv($handle, $length, $delimiter, $enclosure, $escape)) !== FALSE) {
+        if (($handle = fopen($filename, 'r')) !== false) {
+            while (($row = fgetcsv($handle, $length, $delimiter, $enclosure, $escape)) !== false) {
                 $temp = [];
 
-                if(empty($result)) {
-                    if($config->isFirstLineAsAttributes()) {
+                if (empty($this->attributes)) {
+                    if ($config->isFirstLineAsAttributes()) {
                         $this->attributes = $row;
                     } else {
                         $cRow = count($row);
-                        for ($i=0; $i < $cRow; $i++) {
+                        for ($i = 0; $i < $cRow; ++$i) {
                             $attrName = 'attribute '.$i;
                             $this->attributes[] = $attrName;
                             $temp[$attrName] = $row[$i];
@@ -60,13 +67,12 @@ class Reader implements DataReaderInterface
                     }
                 } else {
                     $cRow = count($row);
-                    for ($i=0; $i < $cRow; $i++) {
+                    for ($i = 0; $i < $cRow; ++$i) {
                         $attrName = $this->attributes[$i];
                         $temp[$attrName] = $row[$i];
                     }
                     $result[] = $temp;
                 }
-
             }
             fclose($handle);
         }
@@ -77,7 +83,8 @@ class Reader implements DataReaderInterface
     /**
      * Populates classes.
      */
-    protected function populateClasses() {
+    protected function populateClasses()
+    {
         $this->classes = [];
         $cData = count($this->data);
 
@@ -97,28 +104,31 @@ class Reader implements DataReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function hasAttribute($attribute) {
+    public function hasAttribute($attribute)
+    {
         return array_key_exists($attribute, $this->attributes);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function getClasses(array $attributes = []) {
-        if(!empty($attributes)) {
+    public function getClasses(array $attributes = [])
+    {
+        if (!empty($attributes)) {
             $result = [];
 
             foreach ($attributes as $value) {
-                if($this->hasAttribute($value)) {
+                if ($this->hasAttribute($value)) {
                     $result[$value] = $this->classes[$value];
                 }
             }
@@ -130,9 +140,10 @@ class Reader implements DataReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function getData($start = 0, int $length = null) {
+    public function getData($start = 0, int $length = null)
+    {
         if ($length == null) {
             return $this->data;
         } else {
@@ -141,9 +152,10 @@ class Reader implements DataReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function getByCriteria(array $criteria, $length = null) {
+    public function getByCriteria(array $criteria, $length = null)
+    {
         $result = [];
 
         foreach ($this->data as $row) {
@@ -160,9 +172,10 @@ class Reader implements DataReaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function countByCriteria(array $criteria) {
+    public function countByCriteria(array $criteria)
+    {
         $result = 0;
 
         foreach ($this->data as $row) {
@@ -175,9 +188,11 @@ class Reader implements DataReaderInterface
     }
 
     /**
-     * Checks whether $data matched $criteria
+     * Checks whether $data matched $criteria.
+     *
      * @param array $data
      * @param array $criteria
+     *
      * @return bool True, if matched. False if otherwise.
      */
     private function isMatch($data, $criteria)
