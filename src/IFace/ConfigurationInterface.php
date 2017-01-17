@@ -14,7 +14,7 @@ interface ConfigurationInterface
      *
      * @throws InvalidConfigException If $value is less than  0
      */
-    public function setLength(int $value);
+    public function setLength($value);
 
     /**
      * Retrieves maximum line length.
@@ -30,7 +30,7 @@ interface ConfigurationInterface
      *
      * @throws InvalidConfigException If $delimiter is not a single character
      */
-    public function setDelimiter(string $delimiter);
+    public function setDelimiter($delimiter);
 
     /**
      * Retrieves delimiter character.
@@ -46,7 +46,7 @@ interface ConfigurationInterface
      *
      * @throws InvalidConfigException If $enclosureChar is not a single character
      */
-    public function setEnclosureChar(string $enclosureChar);
+    public function setEnclosureChar($enclosureChar);
 
     /**
      * Retrieces enclosure character.
@@ -62,7 +62,7 @@ interface ConfigurationInterface
      *
      * @throws InvalidConfigException If $escapeChar is not a single character
      */
-    public function setEscapeChar(string $escapeChar);
+    public function setEscapeChar($escapeChar);
 
     /**
      * Retrieves escape character.

@@ -142,7 +142,7 @@ class Reader implements DataReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData($start = 0, int $length = null)
+    public function getData($start = 0, $length = null)
     {
         if ($length == null) {
             return $this->data;

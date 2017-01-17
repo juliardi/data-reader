@@ -47,7 +47,7 @@ class ReaderConfig implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function setLength(int $value)
+    public function setLength($value)
     {
         if ($value < 0) {
             throw new InvalidConfigException('Length must be more or equal to 0');
@@ -66,7 +66,7 @@ class ReaderConfig implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function setDelimiter(string $delimiter)
+    public function setDelimiter($delimiter)
     {
         if (strlen($delimiter) != 1) {
             throw new InvalidConfigException('Delimiter must be a single character');
@@ -86,7 +86,7 @@ class ReaderConfig implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function setEnclosureChar(string $enclosureChar)
+    public function setEnclosureChar($enclosureChar)
     {
         if (strlen($enclosureChar) != 1) {
             throw new InvalidConfigException('Enclosure Character must be a single character');
@@ -106,7 +106,7 @@ class ReaderConfig implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function setEscapeChar(string $escapeChar)
+    public function setEscapeChar($escapeChar)
     {
         if (strlen($escapeChar) != 1) {
             throw new InvalidConfigException('Escape Character must be a single character');

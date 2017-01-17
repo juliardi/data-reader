@@ -45,7 +45,7 @@ interface DataReaderInterface
      *
      * @return array [description]
      */
-    public function getData($start = 0, int $length = null);
+    public function getData($start = 0, $length = null);
 
     /**
      * Retrieves rows that matched the $criteria
