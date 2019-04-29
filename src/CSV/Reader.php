@@ -61,7 +61,7 @@ class Reader implements DataReaderInterface
                         for ($i = 0; $i < $cRow; ++$i) {
                             $attrName = 'attribute '.$i;
                             $this->attributes[] = $attrName;
-                            $temp[$attrName] = $row[$i];
+                            $temp[$attrName] = trim($row[$i]);
                         }
                         $result[] = $temp;
                     }
@@ -69,7 +69,7 @@ class Reader implements DataReaderInterface
                     $cRow = count($row);
                     for ($i = 0; $i < $cRow; ++$i) {
                         $attrName = $this->attributes[$i];
-                        $temp[$attrName] = $row[$i];
+                        $temp[$attrName] = trim($row[$i]);
                     }
                     $result[] = $temp;
                 }
